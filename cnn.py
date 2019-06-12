@@ -254,14 +254,3 @@ print(model.predict(X_test[:100]))
 
 #show actual results for the first 100 images in the test set
 print(y_test[:100])
-
-
-#  Convolutional Neural Network Summary
-#  CNN uses feature extracting method from the given input as RGB (N x N x 3) or Grey scaled images (N x N x 1). It uses filters to find corresponding weights which is to figure out the importance of the pixels in the images that matters.
-#  There are some technics such as Padding, Strides, Pooling layers, CNN Backpropagation
-#  Third party Nets such as classical Net (LeNet-5, AlexNet, VGG), newer nets ResNet, Inception Net
-#  ResNet '2015 (in plain network, increasing # of layers should decrease trainning error but actaully increases because of vanishing gradient. Resblocks allows the gradient to be directly backpropagated to earlier layers and solve problem of "plain network". Resblocks learns identity function easily(the one with less important weights to be gone) -> this harms less on trainning set performance.
-#  Inception Network '2014 (1x1 convolution: shrink number of channels, bottleneck layer: uses 1x1 conv before applying big fillters to reduce the computation cost. then uses bottleneck to stack up different channels of the filters. ex) 28x28x1 + 28x28x3 + 28x28x5 +...+ maxpooling layer with same padding. side branch with FCL and softmax helps that we are going in right way)
-#  Data Augmentation: It should be implemented on-fly and parallel(saves memory) rotation, random cropping, mirroring, shearing, local warping, color shifting, PCA color augmentation.
-#  Ensembling: train several different network independently and uses average of their outputs
-#  Transfer Learning: nn + weights from other sources. 1. freeze all and just replace last layers with SM 2.precompute last frozen layer activation and convert X through all fixed layers and save to disk
