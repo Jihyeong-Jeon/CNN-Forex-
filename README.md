@@ -25,6 +25,13 @@ Input size was 128x128x1 as it was grey scaled image. Conv2D with k=3 s=2 pad=sa
  Ensembling: train several different network independently and uses average of their outputs
  
  Transfer Learning: nn + weights from other sources. 1. freeze all and just replace last layers with SM 2.precompute last frozen layer activation and convert X through all fixed layers and save to disk
+ 
+ Motivation: Equivariance
+Implication: While processing time series data, convolution produces a timeline that shows when different features appeared (if an event is shifted in time in the input, the same representation will appear in the output)
+
+Sequential model uses layers by layers to build  a model in Keras 
+flatten layer makes connection between conv layer and dense layer
+adam optimizer adjusts the learning rate itself throughout the training.
 
 
 
@@ -42,3 +49,10 @@ cross-correlation vs. convolution
 pooling layer: max pooling: 필터사이즈와 스트라이드 사이즈를 설정하고 그 안의 가장 큰 값들만 추출한다. 원래 pooling을 하기전의 필드의 값들은 얼마나 그 부분이 중요한지를 나타내는 지표이기때문에 굳이 모든 값을 사용할 필요는 없고 가장 중요한값만 사용하자는 취지로 풀링을 하게된다. 만약 좋은 feature를 찾았으면 그것은 보존하고 아니다면 그냥 버려라. 지금까지 매우 잘 이용되고 좋은 성능을 보이고 있지만 완벽히 왜 잘작동하는지는 모른다. f=2, s=2 common f=3, s=2 no parameters to learn 
 
 왜 cnn을 사용할까 그리고 장점과 단점은 무엇일까? 일단 파라미터가 확실히 더 적다. 필터에만 파라메타가 존재하기때문에, fc보다 훨씬 적어진다. feature detector(vertical edge detector) shares hyperparameters. 또한 in each layer, each output value depneds only on a small nu,ber of inputs.: Sparsity of connection(연결성의 분산) 2,4,6,7,10
+
+#그래프 자체가 하나의 패턴이다. 그럼 패턴을 인식해서 예측해볼 수 있지않을까?
+
+문제점: 1. 주식시장자체는 일정한 패턴이 절대 존재하지않는다. 시장을 움직이는데 너무 많은 factor가 존재
+2. cnn 자체만의 모델은 주식시장의 특성인 이전의 값을 고려하지않는다. lstm같은 time series 모델로 보완가능할거라 생각. 
+3. 일단 학습시키기 위한 데이터의 preprocesing하는 걸리는 시간이 너무 크다. 이미지의 크기를 증가시켜 작은 곡선에 대한 강조도 필요함
+4. 수학적 공식의 불완전함.
