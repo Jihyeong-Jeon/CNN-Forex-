@@ -1,5 +1,16 @@
 # CNN-Forex-
 
+Charts are extracted from 2017-2018 timeline consists of 361,080 dataset [ forex open hours sunday 5pm to friday 4pm = 49hours break = 24*7 - 49  = 119 hours 17(avg hours per day) * 60 * 365-11=354(holidays) ]
+
+Every 20 minutes were used, which front 15mins for trainning chart and rest of 5min's avg for label.
+5min's avg were deducted from the last minute of trainning chart and divided by 0.00001 to calculate the pip movement. 20 pips are approximately 1% increase of the original value = 1% margin. Thus lables are divided into 5 different status which are 
+0:highly increasing (>40pip), 1: likely increasing (>20pip), 2: neutral (-20pip< X <+20pip), 3: likely decreasing (<-20pip), 4: highly decreasing (<-40pip)
+
+First sorting showed distribution of #h_i_c: 0.061245%, i_c: 0.189265%, n_c: 0.501288%, d_c: 0.185346%, h_d_c: 0.062856% which h_i_c i_c n_c d_c h_d_c denotes 0,1,2,3,4 mentioned above respectively. To reduce unbalanced dataset, data augmentation was needed and oversampling method was used to reduce the unbalance. Oversampling was processed by checking the number of data every sorting iteration and duplicated the same image to match the number of data each time. After data-augmentation data was balanced as all labels were approximately 20%. 
+
+Input size was 128x128x1 as it was grey scaled image. Conv2D with k=3 s=2 pad=same activation=relu optimzer=ADAM loss=categorical_crossentropy metrics=accuracy was used to train and learn the model. the total parameter used was approximately 1M as NN was not very deep. epoch was 3. 
+
+
 #  Convolutional Neural Network Summary
 #  CNN uses feature extracting method from the given input as RGB (N x N x 3) or Grey scaled images (N x N x 1). It uses filters to find corresponding weights which is to figure out the importance of the pixels in the images that matters.
 #  There are some technics such as Padding, Strides, Pooling layers, CNN Backpropagation
